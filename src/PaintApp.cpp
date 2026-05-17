@@ -4,6 +4,14 @@
 #include <sstream>
 #include <string>
 
+namespace {
+void printCanvas(const Canvas& canvas) {
+    for (const std::string& row : canvas.getRows()) {
+        std::cout << row << '\n';
+    }
+}
+}
+
 PaintApp::PaintApp()
     : canvas(20, 10) {
 }
@@ -13,7 +21,7 @@ void PaintApp::run() {
     std::cout << "Only command: POINT x y symbol\n";
     std::cout << "Exit: EXIT\n";
 
-    canvas.print();
+    printCanvas(canvas);
 
     std::string line;
     while (true) {
@@ -34,7 +42,7 @@ void PaintApp::run() {
 
         if (command == "POINT") {
             canvas.setPixel(x, y, symbol);
-            canvas.print();
+            printCanvas(canvas);
         } else {
             std::cout << "Unknown command\n";
         }
