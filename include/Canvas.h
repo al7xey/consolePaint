@@ -18,6 +18,7 @@ public:
     void clear();
     void setPixel(int x, int y, char symbol);
     char getPixel(int x, int y) const;
+    bool contains(int x, int y) const;
     int getWidth() const;
     int getHeight() const;
     const std::vector<std::string>& getRows() const;

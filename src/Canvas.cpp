@@ -27,17 +27,21 @@ void Canvas::clear() {
 }
 
 void Canvas::setPixel(int x, int y, char symbol) {
-    if (x >= 0 && x < width && y >= 0 && y < height) {
+    if (contains(x, y)) {
         pixels[y][x] = symbol;
     }
 }
 
 char Canvas::getPixel(int x, int y) const {
-    if (x < 0 || x >= width || y < 0 || y >= height) {
+    if (!contains(x, y)) {
         return '\0';
     }
 
     return pixels[y][x];
+}
+
+bool Canvas::contains(int x, int y) const {
+    return x >= 0 && x < width && y >= 0 && y < height;
 }
 
 int Canvas::getWidth() const {

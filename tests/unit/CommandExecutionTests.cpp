@@ -44,3 +44,13 @@ TEST(CommandExecutionTests, ExitCommandStopsContext) {
 
     EXPECT_FALSE(context.isRunning());
 }
+
+TEST(CommandExecutionTests, OutOfBoundsPointShowsError) {
+    CommandFactory factory;
+    PaintContext context;
+    factory.create({"CANVAS", {"5", "3"}})->execute(context);
+
+    factory.create({"POINT", {"100", "100", "#"}})->execute(context);
+
+    EXPECT_EQ(context.getLastMessage(), "Coordinates out of bounds");
+}

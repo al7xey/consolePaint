@@ -48,3 +48,12 @@ TEST(CanvasTests, SetRowsRejectsRaggedInput) {
     EXPECT_EQ(canvas.getWidth(), 4);
     EXPECT_EQ(canvas.getHeight(), 2);
 }
+
+TEST(CanvasTests, ContainsChecksBounds) {
+    Canvas canvas(4, 2, '.');
+
+    EXPECT_TRUE(canvas.contains(0, 0));
+    EXPECT_TRUE(canvas.contains(3, 1));
+    EXPECT_FALSE(canvas.contains(-1, 0));
+    EXPECT_FALSE(canvas.contains(4, 1));
+}
