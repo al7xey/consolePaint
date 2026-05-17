@@ -14,9 +14,11 @@
 #include "commands/LoadCommand.h"
 #include "commands/SaveCommand.h"
 
+#include <cstddef>
 #include <cstdlib>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace {
 bool parseInt(const std::string& value, int& result) {

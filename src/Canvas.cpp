@@ -3,10 +3,10 @@
 #include <algorithm>
 
 Canvas::Canvas(int width, int height, char backgroundSymbol)
-    : width(width),
-      height(height),
+    : width(width > 0 ? width : 1),
+      height(height > 0 ? height : 1),
       backgroundSymbol(backgroundSymbol),
-      pixels(height, std::string(width, backgroundSymbol)) {
+      pixels(this->height, std::string(this->width, backgroundSymbol)) {
 }
 
 void Canvas::resize(int newWidth, int newHeight, char fillSymbol) {
