@@ -8,7 +8,19 @@ ConsoleUI::ConsoleUI(std::istream& input, std::ostream& output)
 
 void ConsoleUI::showWelcome() const {
     output << "Console Paint\n";
-    output << "Type HELP to show commands, EXIT to quit.\n";
+    output << "Commands:\n";
+    output << "  CANVAS width height\n";
+    output << "  BRUSH symbol\n";
+    output << "  POINT x y [symbol]\n";
+    output << "  LINE x1 y1 x2 y2 [symbol]\n";
+    output << "  RECT x1 y1 x2 y2 [symbol]\n";
+    output << "  FILL x y [symbol]\n";
+    output << "  CLEAR\n";
+    output << "  SHOW\n";
+    output << "  SAVE file\n";
+    output << "  LOAD file\n";
+    output << "  HELP\n";
+    output << "  EXIT\n";
 }
 
 void ConsoleUI::showPrompt() const {
