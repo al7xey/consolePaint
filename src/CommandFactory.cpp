@@ -13,6 +13,7 @@
 #include "commands/InvalidCommand.h"
 #include "commands/LoadCommand.h"
 #include "commands/SaveCommand.h"
+#include "commands/ShowCommand.h"
 
 #include <cstddef>
 #include <cstdlib>
@@ -66,6 +67,10 @@ std::unique_ptr<ICommand> CommandFactory::create(const ParsedCommand& command) c
 
     if (command.name == "CLEAR") {
         return std::make_unique<ClearCommand>();
+    }
+
+    if (command.name == "SHOW") {
+        return std::make_unique<ShowCommand>();
     }
 
     if (command.name == "CANVAS") {

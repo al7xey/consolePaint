@@ -36,6 +36,18 @@ TEST(CommandExecutionTests, ClearCommandClearsCanvas) {
     EXPECT_EQ(context.getCanvas().getPixel(2, 1), ' ');
 }
 
+TEST(CommandExecutionTests, ShowCommandKeepsCanvas) {
+    CommandFactory factory;
+    PaintContext context;
+    factory.create({"CANVAS", {"5", "3"}})->execute(context);
+    factory.create({"POINT", {"2", "1", "*"}})->execute(context);
+
+    factory.create({"SHOW", {}})->execute(context);
+
+    EXPECT_EQ(context.getLastMessage(), "Canvas shown");
+    EXPECT_EQ(context.getCanvas().getPixel(2, 1), '*');
+}
+
 TEST(CommandExecutionTests, ExitCommandStopsContext) {
     CommandFactory factory;
     PaintContext context;

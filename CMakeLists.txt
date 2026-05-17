@@ -21,6 +21,7 @@ set(APP_SOURCES
     src/commands/DrawRectangleCommand.cpp
     src/commands/FillCommand.cpp
     src/commands/ClearCommand.cpp
+    src/commands/ShowCommand.cpp
     src/commands/SaveCommand.cpp
     src/commands/LoadCommand.cpp
     src/commands/ExitCommand.cpp

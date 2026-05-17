@@ -44,6 +44,7 @@ POINT 6 5 *
 LINE 1 1 20 1 *
 RECT 2 2 10 5 +
 FILL 3 3 @
+SHOW
 SAVE art.txt
 LOAD art.txt
 CLEAR

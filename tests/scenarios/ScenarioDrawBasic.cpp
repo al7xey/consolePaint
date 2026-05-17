@@ -1,4 +1,6 @@
 #include "Canvas.h"
+#include "CommandFactory.h"
+#include "PaintContext.h"
 #include "drawing/ShapeDrawer.h"
 
 int main() {
@@ -20,6 +22,13 @@ int main() {
     }
     if (canvas.getPixel(8, 3) != '.') {
         return 4;
+    }
+
+    PaintContext context;
+    CommandFactory factory;
+    factory.create({"SHOW", {}})->execute(context);
+    if (context.getLastMessage() != "Canvas shown") {
+        return 5;
     }
 
     return 0;
