@@ -38,6 +38,10 @@ target_include_directories(console_paint_lib PUBLIC
     ${PROJECT_SOURCE_DIR}/include
 )
 
+if(MSVC)
+    target_compile_options(console_paint_lib PUBLIC /EHsc)
+endif()
+
 add_executable(console_paint
     src/main.cpp
 )
