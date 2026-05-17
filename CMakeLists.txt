@@ -44,6 +44,4 @@ add_executable(console_paint
 target_link_libraries(console_paint PRIVATE console_paint_lib)
 
 enable_testing()
-if(EXISTS ${PROJECT_SOURCE_DIR}/tests/CMakeLists.txt)
-    add_subdirectory(tests)
-endif()
+add_subdirectory(tests)
