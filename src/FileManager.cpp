@@ -36,9 +36,5 @@ bool FileManager::loadCanvas(Canvas& canvas, const std::string& filePath) const 
         return false;
     }
 
-    const int oldWidth = canvas.getWidth();
-    const int oldHeight = canvas.getHeight();
-    canvas.setRows(rows);
-
-    return canvas.getWidth() != oldWidth || canvas.getHeight() != oldHeight || canvas.getRows() == rows;
+    return canvas.setRows(rows);
 }

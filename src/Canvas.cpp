@@ -52,23 +52,24 @@ const std::vector<std::string>& Canvas::getRows() const {
     return pixels;
 }
 
-void Canvas::setRows(const std::vector<std::string>& rows) {
+bool Canvas::setRows(const std::vector<std::string>& rows) {
     if (rows.empty()) {
-        return;
+        return false;
     }
 
     const std::size_t rowWidth = rows.front().size();
     if (rowWidth == 0) {
-        return;
+        return false;
     }
 
     for (const std::string& row : rows) {
         if (row.size() != rowWidth) {
-            return;
+            return false;
         }
     }
 
     width = static_cast<int>(rowWidth);
     height = static_cast<int>(rows.size());
     pixels = rows;
+    return true;
 }

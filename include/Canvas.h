@@ -21,7 +21,7 @@ public:
     int getWidth() const;
     int getHeight() const;
     const std::vector<std::string>& getRows() const;
-    void setRows(const std::vector<std::string>& rows);
+    bool setRows(const std::vector<std::string>& rows);
 };
 
 #endif
