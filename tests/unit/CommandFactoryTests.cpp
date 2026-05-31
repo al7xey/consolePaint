@@ -1,41 +1,41 @@
-#include <gtest/gtest.h>
+#include <catch2/catch_test_macros.hpp>
 
 #include "CommandFactory.h"
 #include "PaintContext.h"
 
-TEST(CommandFactoryTests, CreatesCanvasCommand) {
+TEST_CASE("CommandFactory creates canvas command", "[factory]") {
     CommandFactory factory;
     PaintContext context;
 
     factory.create({"CANVAS", {"10", "4"}})->execute(context);
 
-    EXPECT_EQ(context.getCanvas().getWidth(), 10);
-    EXPECT_EQ(context.getCanvas().getHeight(), 4);
+    REQUIRE(context.getCanvas().getWidth() == 10);
+    REQUIRE(context.getCanvas().getHeight() == 4);
 }
 
-TEST(CommandFactoryTests, RejectsBadCanvasSize) {
+TEST_CASE("CommandFactory rejects bad canvas size", "[factory]") {
     CommandFactory factory;
     PaintContext context;
 
     factory.create({"CANVAS", {"0", "4"}})->execute(context);
 
-    EXPECT_EQ(context.getLastMessage(), "Canvas size must be positive numbers");
+    REQUIRE(context.getLastMessage() == "Canvas size must be positive numbers");
 }
 
-TEST(CommandFactoryTests, UnknownCommandProducesMessage) {
+TEST_CASE("CommandFactory reports unknown commands", "[factory]") {
     CommandFactory factory;
     PaintContext context;
 
     factory.create({"NOPE", {}})->execute(context);
 
-    EXPECT_EQ(context.getLastMessage(), "Unknown command");
+    REQUIRE(context.getLastMessage() == "Unknown command");
 }
 
-TEST(CommandFactoryTests, EmptyCommandProducesMessage) {
+TEST_CASE("CommandFactory reports empty commands", "[factory]") {
     CommandFactory factory;
     PaintContext context;
 
     factory.create({"", {}})->execute(context);
 
-    EXPECT_EQ(context.getLastMessage(), "Empty command");
+    REQUIRE(context.getLastMessage() == "Empty command");
 }

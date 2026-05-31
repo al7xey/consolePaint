@@ -1,9 +1,9 @@
-#include <gtest/gtest.h>
+#include <catch2/catch_test_macros.hpp>
 
 #include "CommandFactory.h"
 #include "PaintContext.h"
 
-TEST(CommandExecutionTests, BrushAffectsDrawingWithoutExplicitSymbol) {
+TEST_CASE("Brush affects drawing without explicit symbol", "[commands]") {
     CommandFactory factory;
     PaintContext context;
     factory.create({"CANVAS", {"5", "3"}})->execute(context);
@@ -11,10 +11,10 @@ TEST(CommandExecutionTests, BrushAffectsDrawingWithoutExplicitSymbol) {
 
     factory.create({"POINT", {"2", "1"}})->execute(context);
 
-    EXPECT_EQ(context.getCanvas().getPixel(2, 1), '@');
+    REQUIRE(context.getCanvas().getPixel(2, 1) == '@');
 }
 
-TEST(CommandExecutionTests, ExplicitSymbolOverridesBrush) {
+TEST_CASE("Explicit symbol overrides brush", "[commands]") {
     CommandFactory factory;
     PaintContext context;
     factory.create({"CANVAS", {"5", "3"}})->execute(context);
@@ -22,10 +22,10 @@ TEST(CommandExecutionTests, ExplicitSymbolOverridesBrush) {
 
     factory.create({"POINT", {"2", "1", "*"}})->execute(context);
 
-    EXPECT_EQ(context.getCanvas().getPixel(2, 1), '*');
+    REQUIRE(context.getCanvas().getPixel(2, 1) == '*');
 }
 
-TEST(CommandExecutionTests, ClearCommandClearsCanvas) {
+TEST_CASE("Clear command clears canvas", "[commands]") {
     CommandFactory factory;
     PaintContext context;
     factory.create({"CANVAS", {"5", "3"}})->execute(context);
@@ -33,10 +33,10 @@ TEST(CommandExecutionTests, ClearCommandClearsCanvas) {
 
     factory.create({"CLEAR", {}})->execute(context);
 
-    EXPECT_EQ(context.getCanvas().getPixel(2, 1), ' ');
+    REQUIRE(context.getCanvas().getPixel(2, 1) == ' ');
 }
 
-TEST(CommandExecutionTests, ShowCommandKeepsCanvas) {
+TEST_CASE("Show command keeps canvas", "[commands]") {
     CommandFactory factory;
     PaintContext context;
     factory.create({"CANVAS", {"5", "3"}})->execute(context);
@@ -44,25 +44,25 @@ TEST(CommandExecutionTests, ShowCommandKeepsCanvas) {
 
     factory.create({"SHOW", {}})->execute(context);
 
-    EXPECT_EQ(context.getLastMessage(), "Canvas shown");
-    EXPECT_EQ(context.getCanvas().getPixel(2, 1), '*');
+    REQUIRE(context.getLastMessage() == "Canvas shown");
+    REQUIRE(context.getCanvas().getPixel(2, 1) == '*');
 }
 
-TEST(CommandExecutionTests, ExitCommandStopsContext) {
+TEST_CASE("Exit command stops context", "[commands]") {
     CommandFactory factory;
     PaintContext context;
 
     factory.create({"EXIT", {}})->execute(context);
 
-    EXPECT_FALSE(context.isRunning());
+    REQUIRE_FALSE(context.isRunning());
 }
 
-TEST(CommandExecutionTests, OutOfBoundsPointShowsError) {
+TEST_CASE("Out-of-bounds point shows error", "[commands]") {
     CommandFactory factory;
     PaintContext context;
     factory.create({"CANVAS", {"5", "3"}})->execute(context);
 
     factory.create({"POINT", {"100", "100", "#"}})->execute(context);
 
-    EXPECT_EQ(context.getLastMessage(), "Coordinates out of bounds");
+    REQUIRE(context.getLastMessage() == "Coordinates out of bounds");
 }

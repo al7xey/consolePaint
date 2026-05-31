@@ -1,0 +1,11 @@
+.git
+.vs
+build
+build-*
+out
+*.user
+*.suo
+*.obj
+*.exe
+*.pdb
+*.ilk

@@ -1,41 +1,41 @@
-#include <gtest/gtest.h>
+#include <catch2/catch_test_macros.hpp>
 
 #include "CommandParser.h"
 
-TEST(CommandParserTests, ParsesCanvasCommand) {
+TEST_CASE("CommandParser parses canvas command", "[parser]") {
     CommandParser parser;
 
     ParsedCommand command = parser.parse("CANVAS 40 20");
 
-    EXPECT_EQ(command.name, "CANVAS");
-    ASSERT_EQ(command.args.size(), 2);
-    EXPECT_EQ(command.args[0], "40");
-    EXPECT_EQ(command.args[1], "20");
+    REQUIRE(command.name == "CANVAS");
+    REQUIRE(command.args.size() == 2);
+    REQUIRE(command.args[0] == "40");
+    REQUIRE(command.args[1] == "20");
 }
 
-TEST(CommandParserTests, HandlesExtraSpaces) {
+TEST_CASE("CommandParser handles extra spaces", "[parser]") {
     CommandParser parser;
 
     ParsedCommand command = parser.parse("  POINT   5   7   #  ");
 
-    EXPECT_EQ(command.name, "POINT");
-    ASSERT_EQ(command.args.size(), 3);
-    EXPECT_EQ(command.args[2], "#");
+    REQUIRE(command.name == "POINT");
+    REQUIRE(command.args.size() == 3);
+    REQUIRE(command.args[2] == "#");
 }
 
-TEST(CommandParserTests, UppercasesCommandName) {
+TEST_CASE("CommandParser uppercases command name", "[parser]") {
     CommandParser parser;
 
     ParsedCommand command = parser.parse("line 0 0 3 3 *");
 
-    EXPECT_EQ(command.name, "LINE");
+    REQUIRE(command.name == "LINE");
 }
 
-TEST(CommandParserTests, EmptyCommandIsInvalid) {
+TEST_CASE("CommandParser treats empty input as invalid", "[parser]") {
     CommandParser parser;
 
     ParsedCommand command = parser.parse("   ");
 
-    EXPECT_TRUE(command.name.empty());
-    EXPECT_TRUE(command.args.empty());
+    REQUIRE(command.name.empty());
+    REQUIRE(command.args.empty());
 }

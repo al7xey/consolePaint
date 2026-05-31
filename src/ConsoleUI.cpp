@@ -37,8 +37,6 @@ void ConsoleUI::showMessage(const std::string& message) const {
     output << message << '\n';
 }
 
-std::string ConsoleUI::readLine() const {
-    std::string line;
-    std::getline(input, line);
-    return line;
+bool ConsoleUI::readLine(std::string& line) const {
+    return static_cast<bool>(std::getline(input, line));
 }

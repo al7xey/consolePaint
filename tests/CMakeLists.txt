@@ -1,13 +1,4 @@
-include(FetchContent)
-
-FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
-    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
-)
-
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
+find_package(Catch2 3 REQUIRED)
 
 add_executable(unit_tests
     unit/CanvasTests.cpp
@@ -19,10 +10,10 @@ add_executable(unit_tests
     unit/CommandExecutionTests.cpp
 )
 
-target_link_libraries(unit_tests PRIVATE console_paint_lib GTest::gtest_main)
+target_link_libraries(unit_tests PRIVATE console_paint_lib Catch2::Catch2WithMain)
 
-include(GoogleTest)
-gtest_discover_tests(unit_tests)
+include(Catch)
+catch_discover_tests(unit_tests)
 
 add_executable(scenario_draw_basic scenarios/ScenarioDrawBasic.cpp)
 target_link_libraries(scenario_draw_basic PRIVATE console_paint_lib)

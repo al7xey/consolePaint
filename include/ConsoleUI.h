@@ -18,7 +18,7 @@ public:
     void showPrompt() const;
     void showCanvas(const PaintContext& context) const;
     void showMessage(const std::string& message) const;
-    std::string readLine() const;
+    bool readLine(std::string& line) const;
 };
 
 #endif

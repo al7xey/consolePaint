@@ -6,6 +6,8 @@
 #include "ConsoleUI.h"
 #include "PaintContext.h"
 
+#include <iosfwd>
+
 class PaintApplication {
 private:
     PaintContext context;
@@ -15,6 +17,7 @@ private:
 
 public:
     PaintApplication();
+    PaintApplication(std::istream& input, std::ostream& output);
 
     void run();
 };

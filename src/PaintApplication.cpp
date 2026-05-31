@@ -2,9 +2,14 @@
 
 #include <iostream>
 #include <memory>
+#include <string>
 
 PaintApplication::PaintApplication()
     : ui(std::cin, std::cout) {
+}
+
+PaintApplication::PaintApplication(std::istream& input, std::ostream& output)
+    : ui(input, output) {
 }
 
 void PaintApplication::run() {
@@ -13,7 +18,12 @@ void PaintApplication::run() {
 
     while (context.isRunning()) {
         ui.showPrompt();
-        const ParsedCommand parsed = parser.parse(ui.readLine());
+        std::string line;
+        if (!ui.readLine(line)) {
+            break;
+        }
+
+        const ParsedCommand parsed = parser.parse(line);
         std::unique_ptr<ICommand> command = factory.create(parsed);
 
         command->execute(context);
