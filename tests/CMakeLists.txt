@@ -1,4 +1,22 @@
-find_package(Catch2 3 REQUIRED)
+find_package(Catch2 3 QUIET)
+
+if(NOT Catch2_FOUND)
+    if(CMAKE_VERSION VERSION_LESS 3.14)
+        message(FATAL_ERROR "Catch2 is not installed. Install Catch2 or use CMake 3.14+ so it can be downloaded automatically.")
+    endif()
+
+    include(FetchContent)
+
+    FetchContent_Declare(
+        Catch2
+        URL https://github.com/catchorg/Catch2/archive/refs/tags/v3.5.4.zip
+        URL_HASH SHA256=190a236fe0772ac4f5eebfdebfc18f92eeecfd270c55a1e5095ae4f10be2343f
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
+
+    FetchContent_MakeAvailable(Catch2)
+    list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+endif()
 
 add_executable(unit_tests
     unit/CanvasTests.cpp
