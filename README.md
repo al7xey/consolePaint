@@ -1,95 +1,110 @@
 # Console Paint
 
-Console Paint is a small C++17 console application for creating and editing
-ASCII drawings with text commands.
+Console Paint - консольное приложение на C++17 для создания и редактирования
+ASCII-рисунков с помощью текстовых команд.
 
-## Features
+## Сборка
 
-- Create a canvas with a custom size.
-- Choose a brush symbol.
-- Draw points, lines and rectangles.
-- Fill closed areas.
-- Clear the canvas.
-- Save drawings to text files.
-- Load drawings from text files.
-- Handle incomplete and unknown commands with readable messages.
+### Windows PowerShell
 
-## Build
+```powershell
+cmake -S . -B build
+cmake --build build --config Debug
+```
+
+### Linux/macOS
 
 ```bash
-cmake -S . -B build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
 
-## Run
+## Запуск
 
-```bash
-cd build
-./console_paint
+### Windows PowerShell
+
+Интерактивный режим:
+
+```powershell
+.\build\Debug\console_paint.exe
 ```
 
-On Windows:
+Запуск с командами из аргументов:
 
-```bash
-console_paint.exe
+```powershell
+.\build\Debug\console_paint.exe --command "CANVAS 8 4" --command "POINT 2 1 #" --command "SHOW" --command "EXIT"
+.\build\Debug\console_paint.exe --script commands.txt
+.\build\Debug\console_paint.exe CANVAS 8 4
 ```
 
-The application also accepts commands from command-line arguments, which is
-useful for Docker and scripts:
+### Linux/macOS
+
+Интерактивный режим:
 
 ```bash
-./console_paint --command "CANVAS 8 4" --command "POINT 2 1 #" --command "SHOW" --command "EXIT"
-./console_paint --script commands.txt
-./console_paint CANVAS 8 4
+./build/console_paint
 ```
 
-## Commands
+Запуск с командами из аргументов:
+
+```bash
+./build/console_paint --command "CANVAS 8 4" --command "POINT 2 1 #" --command "SHOW" --command "EXIT"
+./build/console_paint --script commands.txt
+./build/console_paint CANVAS 8 4
+```
+
+## Команды рисования
 
 ```text
-CANVAS 40 20
-BRUSH #
-POINT 5 5
-POINT 6 5 *
-LINE 1 1 20 1 *
-RECT 2 2 10 5 +
-FILL 3 3 @
-SHOW
-SAVE art.txt
-LOAD art.txt
-CLEAR
-HELP
-EXIT
+CANVAS 40 20 - создание холста размером 40 на 20 символов
+BRUSH # - выбор символа кисти по умолчанию
+POINT 5 5 - рисование точки текущей кистью в координатах 5 5
+POINT 6 5 * - рисование точки символом * в координатах 6 5
+LINE 1 1 20 1 * - рисование линии символом * от точки 1 1 до точки 20 1
+RECT 2 2 10 5 + - рисование прямоугольника символом + от точки 2 2 до точки 10 5
+FILL 3 3 @ - заливка области от точки 3 3 символом @
+SHOW - вывод текущего холста в консоль
+SAVE art.txt - сохранение рисунка в файл art.txt
+LOAD art.txt - загрузка рисунка из файла art.txt
+CLEAR - очистка холста
+HELP - вывод справки по командам
+EXIT - выход из приложения
 ```
 
-## Tests
+## Тесты
+
+### Windows PowerShell
+
+```powershell
+cmake -S . -B build
+cmake --build build --config Debug
+ctest --test-dir build -C Debug --output-on-failure
+```
+
+### Linux/macOS
 
 ```bash
-cmake -S . -B build
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ctest --test-dir build --output-on-failure
 ```
 
-Unit tests use Catch2 and scenario tests are registered with CTest.
-
 ## Docker
 
-Build the multi-stage image:
+Сборка образа:
 
 ```bash
 docker build -t console-paint .
 ```
 
-The build stage installs all Linux dependencies, compiles the project, and runs
-the full CTest suite. The runtime stage contains only the installed executable.
-
-Run the application in batch mode:
-
-```bash
-docker run --rm console-paint --command "CANVAS 8 4" --command "POINT 2 1 #" --command "SHOW" --command "EXIT"
-```
-
-Run interactively:
+Интерактивный запуск:
 
 ```bash
 docker run --rm -it console-paint
+```
+
+Запуск с командами из аргументов:
+
+```bash
+docker run --rm console-paint --command "CANVAS 8 4" --command "POINT 2 1 #" --command "SHOW" --command "EXIT"
 ```
