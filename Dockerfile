@@ -1,14 +1,32 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS build
 
-RUN apt-get update
-RUN apt-get install -y build-essential cmake catch2
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        catch2 \
+        cmake \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY . .
 
-RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-RUN cmake --build build
-RUN ctest --test-dir build --output-on-failure
+RUN cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+    && cmake --build build --parallel \
+    && ctest --test-dir build --output-on-failure
 
-ENTRYPOINT ["./build/console_paint"]
+FROM ubuntu:24.04 AS runtime
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libstdc++6 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY --from=build /app/build/console_paint ./console_paint
+
+ENTRYPOINT ["./console_paint"]

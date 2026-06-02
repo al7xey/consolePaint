@@ -48,7 +48,5 @@ add_executable(console_paint
 
 target_link_libraries(console_paint PRIVATE console_paint_lib)
 
-install(TARGETS console_paint RUNTIME DESTINATION bin)
-
 enable_testing()
 add_subdirectory(tests)
