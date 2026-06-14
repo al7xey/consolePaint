@@ -15,7 +15,7 @@ void printUsage(const char* programName) {
               << "  " << programName << " CANVAS 8 4\n";
 }
 
-} // namespace
+}
 
 int main(int argc, char* argv[]) {
     if (argc == 1) {

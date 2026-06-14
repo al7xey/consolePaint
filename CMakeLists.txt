@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+if(MSVC)
+    add_compile_options(/FS)
+endif()
+
 set(APP_SOURCES
     src/Canvas.cpp
     src/ConsoleUI.cpp
@@ -38,15 +42,14 @@ target_include_directories(console_paint_lib PUBLIC
     ${PROJECT_SOURCE_DIR}/include
 )
 
-if(MSVC)
-    target_compile_options(console_paint_lib PUBLIC /EHsc)
-endif()
-
 add_executable(console_paint
     src/main.cpp
 )
 
 target_link_libraries(console_paint PRIVATE console_paint_lib)
 
-enable_testing()
-add_subdirectory(tests)
+include(CTest)
+
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
