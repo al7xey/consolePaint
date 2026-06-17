@@ -4,8 +4,6 @@ Console Paint - консольное приложение на C++17 для ри
 
 ## Запуск через Docker
 
-Сначала открой Docker Desktop и дождись, пока он полностью запустится. Если Docker Desktop не запущен, команды `docker build` и `docker run` выдадут ошибку подключения к `dockerDesktopLinuxEngine`.
-
 Windows PowerShell:
 
 ```powershell
